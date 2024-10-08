@@ -10,7 +10,7 @@ services:
       - "8000:80"
     depends_on:
       - database
-    network_mode: bridge  # Ajoutez cette ligne
+    network_mode: bridge
 
   database:
     image: mysql:5.7

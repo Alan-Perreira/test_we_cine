@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema App</title>
+    <link rel="stylesheet" href="{{ asset('build/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue !</h1>
+        <input type="text" id="search" placeholder="Rechercher un film..." />
+        <div id="search-results" class="search-results"></div> <!-- Ajout d'un div pour les résultats de recherche -->
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Genres</h2>
+            <ul>
+                {% for genre in genres %}
+                    <li><a href="{{ path('genre_movies', {'id': genre.id}) }}">{{ genre.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+       <main class="main-content">
+    <!-- Afficher le meilleur film par défaut -->
+    <div id="movies-container" class="movies-container">
+        {% if bestMovie %}
+            <div class="movie-card">
+                <h3>{{ bestMovie.title }}</h3>
+                <p>{{ bestMovie.overview }}</p>
+                {% if trailerUrl %}
+                    <iframe width="50%" height="315" src="{{ trailerUrl }}" frameborder="0" allowfullscreen></iframe>
+                {% else %}
+                    <p>Aucune bande-annonce disponible.</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>Aucun film recommandé pour le moment.</p>
+        {% endif %}
+    </div>
+</main>
+
+    </div>
+
+    <script src="{{ asset('build/runtime.js') }}"></script>
+    <script src="{{ asset('build/app.js') }}"></script>
+    <script src="{{ asset('js/search.js') }}"></script>
+</body>
+</html>

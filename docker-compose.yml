@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: symfony_app
+    volumes:
+      - .:/var/www/symfony
+    ports:
+      - "8000:80"
+    depends_on:
+      - database
+    network_mode: bridge  # Ajoutez cette ligne
+
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: cinema_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ""
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  db_data:

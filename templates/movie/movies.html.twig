@@ -1,0 +1,53 @@
+<!DOCTYPE html>  
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Films par Genre</title>
+    <link rel="stylesheet" href="{{ asset('build/styles.css') }}">
+</head>
+<body>
+    <header >
+        <h1>Bienvenue !</h1>
+        <input class="{% if app.request.get('_route') != 'homepage' %}hidden{% endif %}" type="text" id="search" placeholder="Rechercher un film..." />
+        <a href="{{ path('homepage') }}"><button class="play-button">Retour à la page d'accueil</button></a>
+        <div id="search-results" class="search-results"></div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Genres</h2>
+            <ul>
+                {% for genre in genres %}
+                    <li><a href="{{ path('genre_movies', {'id': genre.id}) }}">{{ genre.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <h2><a href="{{ path('homepage') }}">Films</a></h2>
+            <div class="movies-grid">
+                {% for movie in movies %}
+                    <div class="movie-card">
+                        <h3>{{ movie.title }}</h3>
+                        <p>{{ movie.overview }}</p>
+                        <!-- Intégrer l'iframe pour la bande-annonce -->
+                        {% if movie.trailer_key %}
+                            <iframe width="50%" height="315" src="https://www.youtube.com/embed/{{ movie.trailer_key }}" frameborder="0" allowfullscreen></iframe>
+                        {% else %}
+                            <p>Aucune bande-annonce disponible.</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Cinema App. Tous droits réservés.</p>
+    </footer>
+    <script src="{{ asset('build/runtime.js') }}"></script>
+    <script src="{{ asset('build/app.js') }}"></script>
+    <script src="{{ asset('js/search_movies.js') }}"></script>
+</body>
+</html>
